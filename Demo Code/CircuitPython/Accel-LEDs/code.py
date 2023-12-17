@@ -62,10 +62,6 @@ while True:
     acc_x, acc_y, acc_z = sensor.acceleration
     gyro_x, gyro_z, gyro_z = sensor.gyro
 
-    ### accel and Gyro stuff
-    # print(
-        # "Accel X:%.2f Y:%.2f Z:%.2f ms^2 Gyro X:%.2f Y:%.2f Z:%.2f radians/s"
-        # % (sensor.acceleration + sensor.gyro)
     # )
 
     #print(sensor.acceleration)
@@ -85,9 +81,7 @@ while True:
     for i in range(num_leds):
         if i == myVal:
             c = fancy.CRGB(fancy.CHSV(i/num_leds+offset,1.0,0.05))
-        elif i+1 == myVal:
-            c = fancy.CRGB(fancy.CHSV(i/num_leds+offset,0.50,0.01))
-        elif i-1 == myVal:
+        elif i + 1 == myVal or i - 1 == myVal:
             c = fancy.CRGB(fancy.CHSV(i/num_leds+offset,0.50,0.01))
         else:
             c = fancy.CRGB(0,0,0)
