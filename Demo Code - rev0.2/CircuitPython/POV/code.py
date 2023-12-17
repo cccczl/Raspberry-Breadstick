@@ -64,7 +64,7 @@ class BMPError(Exception):
 
 
 try:
-    with open("/" + FILENAME, "rb") as f:
+    with open(f"/{FILENAME}", "rb") as f:
         print("File opened")
         if f.read(2) != b'BM':  # check signature
             raise BMPError("Not BitMap file")
@@ -124,7 +124,7 @@ except OSError as e:
     else:
         raise OSError("OS Error 0.5")
 except BMPError as e:
-    print("Failed to parse BMP: " + e.args[0])
+    print(f"Failed to parse BMP: {e.args[0]}")
 
 gc.collect()
 print(gc.mem_free())
@@ -140,12 +140,10 @@ while True:
 
 
 
-    if(gyro_z<0):
+    if (gyro_z<0):
         for col in range(bmpWidth):
             gyro_x, gyro_z, gyro_z = IMU.gyro
-            if(gyro_z<0):
-                pass
-            else:
+            if gyro_z >= 0:
                 break
             index = bmpHeight * 4 * col
             row = databuf[index:index + bmpHeight * 4]
@@ -159,10 +157,8 @@ while True:
     else:
         for col in range(bmpWidth,-1,-1):
             gyro_x, gyro_z, gyro_z = IMU.gyro
-            if(gyro_z<0):
+            if (gyro_z<0):
                 break
-            else:
-                pass
             index = bmpHeight * 4 * col
             row = databuf[index:index + bmpHeight * 4]
             dotstar.write(bytearray([0x00, 0x00, 0x00, 0x00]))
@@ -175,7 +171,7 @@ while True:
 
     # clear it out
     dotstar.write(bytearray([0x00, 0x00, 0x00, 0x00]))
-    for r in range(bmpHeight * 5):
+    for _ in range(bmpHeight * 5):
         dotstar.write(bytearray([0xFF, 0x00, 0x00, 0x00]))
     dotstar.write(bytearray([0xff, 0xff, 0xff, 0xff]))
     gc.collect()
